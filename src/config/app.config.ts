@@ -134,9 +134,7 @@ export const corsOptions = {
     'DELETE',
     'OPTIONS',
     'PATCH',
-    'HEAD',
-    'CONNECT',
-    'TRACE',
+    'HEAD'
   ],
   credentials: true,
   allowedHeaders: [

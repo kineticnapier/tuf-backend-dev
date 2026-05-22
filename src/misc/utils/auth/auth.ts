@@ -8,7 +8,18 @@ import { hasFlag } from './permissionUtils.js';
 import { permissionFlags } from '@/config/constants.js';
 
 const SALT_ROUNDS = 10;
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // Should be in env
+
+function requireEnv(name: string): string {
+  const value = process.env[name]?.trim();
+  if (!value) {
+    throw new Error(`Missing required environment variable: ${name}`);
+  }
+  return value;
+}
+const JWT_SECRET =
+  process.env.NODE_ENV === 'production'
+    ? requireEnv('JWT_SECRET')
+    : process.env.JWT_SECRET || 'dev-only-secret';
 
 const JWT_REFRESH_EXPIRES_IN_DAYS = 7;
 const JWT_REFRESH_EXPIRES_IN_SEC = JWT_REFRESH_EXPIRES_IN_DAYS * 24 * 60 * 60;
