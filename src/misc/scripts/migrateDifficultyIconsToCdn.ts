@@ -45,7 +45,7 @@ function parseArgs(): CliOptions {
     .option('--cache-path <dir>', 'Override the on-disk icon cache root (defaults to $CACHE_PATH/icons or ./cache/icons)')
     .parse(process.argv);
 
-  const opts = program.opts<{ dryRun?: boolean; cachePath?: string }>();
+  const opts = program.opts() as { dryRun?: boolean; cachePath?: string };
   const defaultCache = process.env.CACHE_PATH || path.join(process.cwd(), 'cache');
   return {
     dryRun: Boolean(opts.dryRun),

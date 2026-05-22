@@ -158,16 +158,16 @@ async function main(): Promise<void> {
             'Cap successful re-ingests (--apply) or would-migrate preview rows (--dry-run); omit = process entire queue',
             '',
         )
-        .parse();
+        .parse(process.argv);
 
-    const opts = program.opts<{
+    const opts = program.opts() as {
         hitsFile?: string;
         dryRun?: boolean;
         apply?: boolean;
         actorUserId?: string;
         continueOnError?: boolean;
         maxFiles?: string;
-    }>();
+    };
 
     const dryRun = opts.dryRun === true;
     const apply = opts.apply === true;

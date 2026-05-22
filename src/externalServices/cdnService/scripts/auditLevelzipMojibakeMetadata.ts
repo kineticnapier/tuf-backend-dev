@@ -54,16 +54,16 @@ async function main(): Promise<void> {
             'Pipeline mode: requires --file-id. Exit 0 if metadata has no mojibake hits, 2 if hits remain, 1 on error. No NDJSON to stdout.',
             false,
         )
-        .parse();
+        .parse(process.argv);
 
-    const opts = program.opts<{
+    const opts = program.opts as {
         batchSize?: string;
         maxRows?: string;
         offset?: string;
         fileId?: string;
         format?: string;
         checkClean?: boolean;
-    }>();
+    };
 
     const checkClean = opts.checkClean === true;
     const batchSize = Math.max(1, parseInt(String(opts.batchSize || '500'), 10) || 500);

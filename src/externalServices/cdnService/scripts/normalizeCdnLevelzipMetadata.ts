@@ -47,16 +47,16 @@ async function main(): Promise<void> {
         .option('--limit <n>', 'Deprecated: same as --max-rows')
         .option('--offset <n>', 'Skip first n LEVELZIP rows (order by id)', '0')
         .option('--file-id <uuid>', 'Normalize a single cdn_files.id')
-        .parse();
+        .parse(process.argv);
 
-    const opts = program.opts<{
+    const opts = program.opts() as {
         apply?: boolean;
         batchSize?: string;
         maxRows?: string;
         limit?: string;
         offset?: string;
         fileId?: string;
-    }>();
+    };
     const apply = opts.apply === true;
     const batchSize = Math.max(1, parseInt(String(opts.batchSize || '1000'), 10) || 1000);
     const maxRowsRaw = opts.maxRows ?? opts.limit;

@@ -1,6 +1,17 @@
 import { logger } from '../core/LoggerService.js';
 import { RecaptchaEnterpriseServiceClient } from '@google-cloud/recaptcha-enterprise';
-import key from '@/config/recaptcha-service-key.js';
+
+function getRecaptchaCredentials(): Record<string, unknown> | undefined {
+  const raw = process.env.RECAPTCHA_SERVICE_ACCOUNT_JSON;
+  if (!raw?.trim()) return undefined;
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    logger.error('RECAPTCHA_SERVICE_ACCOUNT_JSON is not valid JSON');
+    return undefined;
+  }
+}
 
 // gRPC error codes that are retryable (transient errors)
 const RETRYABLE_ERROR_CODES = [
@@ -40,9 +51,11 @@ export default class CaptchaService {
  */
   public getInstance = (): RecaptchaEnterpriseServiceClient => {
     if (!this.recaptchaClient) {
-      this.recaptchaClient = new RecaptchaEnterpriseServiceClient({
-        credentials: key,
-      });
+      const credentials = getRecaptchaCredentials();
+
+      this.recaptchaClient = new RecaptchaEnterpriseServiceClient(
+        credentials ? { credentials } : {}
+      );
     logger.info('Created new reCAPTCHA Enterprise client');
     }
     return this.recaptchaClient;

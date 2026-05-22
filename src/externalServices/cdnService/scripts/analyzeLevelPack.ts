@@ -120,9 +120,9 @@ async function main(): Promise<void> {
         .option('--list-only', 'List archive entries only (skip extract + parse)', false)
         .option('--compare-db', 'Include persisted metadata + diff hints (requires --file-id or --level-id)', false)
         .option('--metadata-only', 'Print only proposedMetadata JSON', false)
-        .parse();
+        .parse(process.argv);
 
-    const opts = program.opts<{
+    const opts = program.opts as {
         zip?: string;
         fileId?: string;
         levelId?: number;
@@ -130,7 +130,7 @@ async function main(): Promise<void> {
         listOnly?: boolean;
         compareDb?: boolean;
         metadataOnly?: boolean;
-    }>();
+    };
 
     const hasZip = Boolean(opts.zip?.trim());
     const hasFileId = Boolean(opts.fileId?.trim());

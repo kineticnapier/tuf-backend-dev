@@ -29,7 +29,10 @@
     "cdc": "cross-env tsx src/externalServices/cdcService/app.ts",
     "cdc:prod": "cross-env NODE_ENV=production tsx src/externalServices/cdcService/app.ts",
     "reconcile:es": "cross-env tsx src/misc/scripts/reconcileElasticsearch.ts",
-    "backfill:leaderboard-ranks": "cross-env tsx src/misc/scripts/backfillLeaderboardRankHistory.ts"
+    "backfill:leaderboard-ranks": "cross-env tsx src/misc/scripts/backfillLeaderboardRankHistory.ts",
+    "typecheck": "tsc --project tsconfig.json --noEmit",
+    "lint": "gts lint",
+    "fix": "gts fix"
   },
   "keywords": [],
   "author": "",
